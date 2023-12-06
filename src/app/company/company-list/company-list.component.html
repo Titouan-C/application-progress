@@ -23,9 +23,8 @@
             <td>{{ company.address }}</td>
             <td appStatusDirective>{{ company.status }}</td>
             <td>
-                <span (click)="setCurrentCompany(company)">Éditer</span>
-                <!-- <a [routerLink]="['/', 'companies', company.id]"
-                >Voir</a> -->
+                <span (click)="setCurrentCompany(company)">Éditer</span><br/>
+                <a (click)="goToCompany(company)">Voir</a>
             </td>
         </tr>
     </tbody>
