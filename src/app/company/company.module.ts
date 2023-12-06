@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CompanyFormComponent } from './company-form/company-form.component';
 import { CompanyListComponent } from './company-list/company-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CompanyService } from './company.service';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   exports: [
     CompanyFormComponent,
     CompanyListComponent
+  ],
+  providers: [
+    CompanyService
   ]
 })
 export class CompanyModule { }

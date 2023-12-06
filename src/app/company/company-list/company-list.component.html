@@ -1,4 +1,11 @@
-<h2>Liste des entreprises</h2>
+<h2>Mon entreprise</h2>
+<p><strong>ID : </strong> {{ currentCompany?.id }}</p>
+<p><strong>Nom de l'entreprise : </strong> {{ currentCompany?.name }}</p>
+<p><strong>Adresse de l'entreprise : </strong> {{ currentCompany?.address }}</p>
+<p *ngIf="!currentCompany">Chargement...</p>
+<button type="button" (click)="rotateCompanyClicked()">Voir toutes les entreprises</button>
+
+<!-- <h2>Liste des entreprises</h2>
 <table>
     <thead>
         <th>Nom</th>
@@ -10,4 +17,4 @@
             <td>{{ company.address }}</td>
         </tr>
     </tbody>
-</table>
+</table> -->
