@@ -1,1 +1,35 @@
-<p>company-form works!</p>
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+    <label for="id">ID</label>
+    <input type="number" formControlName="id" id="id"
+    [ngClass]="companyForm.get('id')?.invalid
+    && (companyForm.get('id')?.dirty || companyForm.get('id')?.touched)
+    ? 'error-red'
+    : ''"/>
+
+    <label for="name">Nom de l'entreprise</label>
+    <input type="text" formControlName="name" id="name"
+    [ngClass]="companyForm.get('name')?.invalid
+    && (companyForm.get('name')?.dirty || companyForm.get('name')?.touched)
+    ? 'error-red'
+    : ''"/>
+
+    <label for="address">Adresse de l'entreprise</label>
+    <input type="text" formControlName="address" id="address"
+    [ngClass]="companyForm.get('address')?.invalid
+    && (companyForm.get('address')?.dirty || companyForm.get('address')?.touched)
+    ? 'error-red'
+    : ''"/>
+
+    <!-- <div formGroupName="address">
+        <h2>Adresse de l'entreprise</h2>
+        <label for="street">Rue</label>
+        <input type="text" formControlName="street" id="street" />
+
+        <label for="city">Ville</label>
+        <input type="text" formControlName="city" id="city" />
+
+        <label for="zip">Code postal</label>
+        <input type="text" formControlName="zip" id="zip" />
+    </div> -->
+    <button type="submit">Valider</button>
+</form>
