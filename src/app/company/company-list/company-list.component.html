@@ -1,0 +1,13 @@
+<h2>Liste des entreprises</h2>
+<table>
+    <thead>
+        <th>Nom</th>
+        <th>Adresse</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let company in companyArray">
+            <td>{{ company.name }}</td>
+            <td>{{ company.address }}</td>
+        </tr>
+    </tbody>
+</table>
