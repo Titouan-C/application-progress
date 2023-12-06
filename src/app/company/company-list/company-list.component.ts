@@ -9,10 +9,9 @@ import { Subscription } from 'rxjs';
   styleUrl: './company-list.component.css'
 })
 export class CompanyListComponent implements OnInit, OnDestroy {
-  currentCompany: Company | undefined;
-  companyList: Array<Company> | undefined;
+  currentCompany: Company | undefined | null;
+  companyList = new Array<Company>();
   subscription: Subscription | undefined;
-  subscriptionTwo: Subscription | undefined;
 
   constructor(private companyService: CompanyService) { }
 
@@ -20,29 +19,25 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     if (!this.subscription) {
       this.subscription = this.companyService.getAllCompanies().subscribe(resCompanyList => {
         this.companyList = resCompanyList;
-
-        if (this.companyList.length > 0) {
-          this.currentCompany = this.companyList.at(0);
-        }
       })
     }
   }
 
-  rotateCompanyClicked(): void {
-    if (!this.subscriptionTwo) {
-      this.companyService.rotateAllCompanies().subscribe(company => {
-        this.currentCompany = company;
-      })
-    }
+  setCurrentCompany(company: Company): void {
+    this.currentCompany = null;
+    setTimeout(() => {
+      this.currentCompany = company;
+    }, 10);
+  }
+
+  updateList(company: Company): void {
+    let indexItem: number = this.companyList.findIndex(c => c.id === company.id);
+    this.companyList[indexItem] = { ...this.companyList[indexItem], ...company };
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
-    }
-
-    if (this.subscriptionTwo) {
-      this.subscriptionTwo.unsubscribe();
     }
   }
 

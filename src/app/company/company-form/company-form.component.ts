@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Company } from '../company.model';
 import { customNameValidator } from './customName.directive';
@@ -9,6 +9,11 @@ import { customNameValidator } from './customName.directive';
   styleUrl: './company-form.component.css'
 })
 export class CompanyFormComponent implements OnInit {
+  @Input()
+  model: Company | null = null;
+  @Output()
+  emitCompany: EventEmitter<Company> = new EventEmitter<Company>();
+
   companyForm = this.fb.group({
     id: [0, [
       Validators.required,
@@ -17,30 +22,39 @@ export class CompanyFormComponent implements OnInit {
     name: ['', [
       Validators.required,
       Validators.minLength(2),
-      customNameValidator(/CGI/)
+      customNameValidator(/IPI/)
     ]],
     address: ['', [
       Validators.required
+    ]],
+    status: ['', [
+      Validators.required
     ]]
   }, { updateOn: "submit" });
-  model: Company;
+  submitted = false;
 
-  constructor(private fb: FormBuilder) {
-    this.model = new Company(
-      1,
-      'Airbus',
-      '2 rue des maronniers Blagnac 31700'
-    );
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.submitted = false;
+    if (this.model === null) {
+      this.model = new Company(-1, '', '', '');
+    } else {
+      this.companyForm.patchValue(this.model);
+    }
   }
 
-  ngOnInit() {
-    this.companyForm.patchValue(this.model);
-  }
-
-  onSubmit() {
+  onSubmit(): void {
+    this.submitted = true;
     if (this.companyForm.valid) {
       this.model = { ...this.model!, ...this.companyForm.value };
-      console.log(this.model);
+      this.emitCompany.emit(this.model!);
+    }
+  }
+
+  resetForm(): void {
+    if (this.model !== null) {
+      this.companyForm.patchValue(this.model);
     }
   }
 }

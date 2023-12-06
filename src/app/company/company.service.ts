@@ -5,9 +5,9 @@ import { Observable, concatMap, delay, of, from } from "rxjs";
 @Injectable()
 export class CompanyService {
     mockCompanyList: Array<Company> = [
-        new Company(1, 'Airbus', '2 rue des maronniers Blagnac 31700'),
-        new Company(2, 'CGI', '5 rue des maronniers Blagnac 317000'),
-        new Company(3, 'Sopra', '10 rue des grenadiers Blagnac 31700')
+        new Company(1, 'Airbus', '2 rue des maronniers Blagnac 31700', 'En Attente'),
+        new Company(2, 'CGI', '5 rue des maronniers Blagnac 31700', 'En Attente'),
+        new Company(3, 'Sopra', '10 rue des grenadiers Blagnac 31700', 'En Attente')
     ];
 
     getAllCompanies(): Observable<Array<Company>> {

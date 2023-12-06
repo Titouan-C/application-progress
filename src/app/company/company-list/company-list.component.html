@@ -1,20 +1,34 @@
-<h2>Mon entreprise</h2>
+<!-- <h2>Mon entreprise</h2>
 <p><strong>ID : </strong> {{ currentCompany?.id }}</p>
 <p><strong>Nom de l'entreprise : </strong> {{ currentCompany?.name }}</p>
 <p><strong>Adresse de l'entreprise : </strong> {{ currentCompany?.address }}</p>
 <p *ngIf="!currentCompany">Chargement...</p>
 <button type="button" (click)="rotateCompanyClicked()">Voir toutes les entreprises</button>
 
-<!-- <h2>Liste des entreprises</h2>
-<table>
+<p appStatusDirective>En Attente</p>
+<p appStatusDirective>Refus</p> -->
+
+<h2>Liste des entreprises</h2>
+<p *ngIf="companyList.length == 0">Chargement...</p>
+<table *ngIf="companyList.length > 0">
     <thead>
         <th>Nom</th>
         <th>Adresse</th>
+        <th>Statut</th>
+        <th>Actions</th>
     </thead>
-    <tbody>
-        <tr *ngFor="let company in companyArray">
+    <tbody>      
+        <tr *ngFor="let company of companyList">
             <td>{{ company.name }}</td>
             <td>{{ company.address }}</td>
+            <td appStatusDirective>{{ company.status }}</td>
+            <td>
+                <span (click)="setCurrentCompany(company)">Éditer</span>
+                <!-- <a [routerLink]="['/', 'companies', company.id]"
+                >Voir</a> -->
+            </td>
         </tr>
     </tbody>
-</table> -->
+</table>
+<app-company-form *ngIf="currentCompany" [model]="currentCompany" (emitCompany)="updateList($event)">
+</app-company-form>
