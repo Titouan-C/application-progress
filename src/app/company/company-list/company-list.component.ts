@@ -24,6 +24,12 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   setCurrentCompany(company: Company): void {
     this.currentCompany = null;
     setTimeout(() => {
@@ -38,12 +44,6 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   goToCompany(company: Company): void {
     this.router.navigate(['/company', company.id])
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
 }
