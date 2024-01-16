@@ -21,7 +21,7 @@
         <tr *ngFor="let company of companyList">
             <td>{{ company.name }}</td>
             <td>{{ company.address }}</td>
-            <td appStatusDirective>{{ company.status }}</td>
+            <td appStatusDirective>{{ company.status?.name }}</td>
             <td>
                 <span (click)="setCurrentCompany(company)">Éditer</span><br/>
                 <a (click)="goToCompany(company)">Voir</a>
