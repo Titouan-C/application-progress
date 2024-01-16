@@ -1,11 +1,5 @@
-<form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
-    <label for="id">ID</label>
-    <input type="number" formControlName="id" id="id"
-    [ngClass]="companyForm.get('id')?.invalid
-    && (companyForm.get('id')?.dirty || companyForm.get('id')?.touched)
-    ? 'error-red'
-    : ''"/>
-
+<p *ngIf="!isLoading">Chargement...</p>
+<form  *ngIf="isLoading" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
     <label for="name">Nom de l'entreprise</label>
     <input type="text" formControlName="name" id="name"
     [ngClass]="companyForm.get('name')?.invalid
@@ -22,8 +16,10 @@
 
     <label for="status">Statut</label>
     <select name="status" id="status" formControlName="status">
-        <option value="En Attente">En Attente</option>
-        <option value="Refus">Refus</option>
+        <option value="" selected disabled>Veuillez choisir un statut</option>
+        <option *ngFor="let name of names" value="{{ name }}">
+            {{ name }}
+        </option>
     </select>
     
     <button type="submit">Valider</button>
