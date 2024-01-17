@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Company } from '../../shared/models/company.model';
@@ -12,11 +10,13 @@ import { StatusService } from '../../shared/services/status.service';
 @Component({
   selector: 'app-company-form',
   templateUrl: './company-form.component.html',
-  styleUrls: ['./company-form.component.css']
+  styleUrl: './company-form.component.css'
 })
 export class CompanyFormComponent implements OnInit {
-  @Input() model: Company | null = null;
-  @Output() emitCompany: EventEmitter<Company> = new EventEmitter<Company>;
+  @Input()
+  model: Company | null = null;
+  @Output()
+  emitCompany: EventEmitter<Company> = new EventEmitter<Company>();
 
   companyForm = this.fb.group({
     name: ['', [
@@ -31,12 +31,10 @@ export class CompanyFormComponent implements OnInit {
       Validators.required
     ]]
   }, { updateOn: "submit" });
-
   submitted = false;
   statusList: Array<Status> = [];
   currentRoute: string = '';
   isLoading: boolean = false;
-  companies: Company[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -94,7 +92,7 @@ export class CompanyFormComponent implements OnInit {
     });
 
     if (!this.model) {
-      this.model = new Company(-1, '', '', new Status(-1, ''));
+      this.model = new Company('', '', new Status(-1, ''));
       this.isLoading = true;
     } else {
       this.companyForm.patchValue({
@@ -111,21 +109,16 @@ export class CompanyFormComponent implements OnInit {
     if (this.companyForm.valid) {
       this.model = { ...this.model!, ...this.companyForm.value, status: this.convertToStatus(this.companyForm.value.status || '') };
       this.emitCompany.emit(this.model!);
-      this.companyService.updateCompany(this.model);
-      this.router.navigate(['company']);
     }
   }
 
   resetForm(): void {
-
-    this.model = new Company(-1, '', '', new Status(names.EnAttente));
-    this.companyForm.reset({
-      name: this.model.name,
-      address: this.model.address,
-      status: this.model.status?.name || '',
-    });
-
-    this.submitted = false;
+    if (this.model) {
+      this.companyForm.patchValue({
+        name: this.model.name,
+        address: this.model.address,
+        status: this.model.status?.name || '',
+      });
+    }
   }
-
 }
