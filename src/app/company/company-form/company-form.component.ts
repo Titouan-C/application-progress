@@ -92,7 +92,7 @@ export class CompanyFormComponent implements OnInit {
     });
 
     if (!this.model) {
-      this.model = new Company(-1, '', '', new Status(-1, ''));
+      this.model = new Company('', '', new Status(-1, ''));
       this.isLoading = true;
     } else {
       this.companyForm.patchValue({
@@ -109,8 +109,6 @@ export class CompanyFormComponent implements OnInit {
     if (this.companyForm.valid) {
       this.model = { ...this.model!, ...this.companyForm.value, status: this.convertToStatus(this.companyForm.value.status || '') };
       this.emitCompany.emit(this.model!);
-      this.companyService.updateCompany(this.model);
-      this.router.navigate(['company']);
     }
   }
 

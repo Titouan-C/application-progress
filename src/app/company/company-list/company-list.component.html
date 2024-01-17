@@ -7,7 +7,7 @@
 
 <p appStatusDirective>En Attente</p>
 <p appStatusDirective>Refus</p> -->
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 <h2>Liste des entreprises</h2>
 <p *ngIf="companyList.length == 0">Chargement...</p>
 <table *ngIf="companyList.length > 0">
@@ -23,11 +23,12 @@
             <td>{{ company.address }}</td>
             <td appStatusDirective>{{ company.status?.name }}</td>
             <td>
-                <span (click)="setCurrentCompany(company)">Éditer</span><br/>
+            <a><span (click)="setCurrentCompany(company)">Éditer</span><br/></a>
                 <a (click)="goToCompany(company)">Voir</a>
             </td>
         </tr>
     </tbody>
 </table>
+<button type="button" (click)="addNewCompany()">Nouvelle Entreprise</button>
 <app-company-form *ngIf="currentCompany" [model]="currentCompany" (emitCompany)="updateList($event)">
 </app-company-form>

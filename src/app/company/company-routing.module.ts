@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, Injectable, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CompanyFormComponent } from './company-form/company-form.component';
 import { CompanyListComponent } from './company-list/company-list.component';
@@ -9,6 +9,12 @@ const routes: Routes = [
   { path: ':id', component: CompanyFormComponent },
   { path: '', redirectTo: 'list', pathMatch: 'full' }
 ]
+
+
+  
+
+
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

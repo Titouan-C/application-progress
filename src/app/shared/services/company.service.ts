@@ -18,9 +18,11 @@ export class CompanyService {
     }
 
     async updateCompany(company: Company) {
-        console.log("ok");
-
-        await db.companies.update(company.id, { ...company });
+        if (company.id) {
+            await db.companies.update(company.id, { ...company });
+        } else {
+            throw Error("L'identifiant de l'entreprise est inconnue");
+        }
     }
 
     async addCompany(company: Company) {
