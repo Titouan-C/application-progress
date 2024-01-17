@@ -3,6 +3,7 @@ import { Company } from '../company.model';
 import { CompanyService } from '../company.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { Status, names } from '../status.model';
 
 @Component({
   selector: 'app-company-list',
@@ -39,11 +40,23 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   updateList(company: Company): void {
     let indexItem: number = this.companyList.findIndex(c => c.id === company.id);
-    this.companyList[indexItem] = { ...this.companyList[indexItem], ...company };
+    if (indexItem > -1) {
+      this.companyList[indexItem] = { ...this.companyList[indexItem], ...company };
+    } else {
+      this.companyList.push(company);
+    }
+    
   }
+
+ 
 
   goToCompany(company: Company): void {
     this.router.navigate(['/company', company.id])
   }
+  
+  addNewCompany() {
+    this.currentCompany = new Company(-1, "", "", new Status(names.EnAttente));
+  }
+
 
 }

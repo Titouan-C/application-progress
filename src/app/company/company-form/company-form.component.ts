@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Company } from '../company.model';
@@ -9,13 +11,11 @@ import { CompanyService } from '../company.service';
 @Component({
   selector: 'app-company-form',
   templateUrl: './company-form.component.html',
-  styleUrl: './company-form.component.css'
+  styleUrls: ['./company-form.component.css']
 })
 export class CompanyFormComponent implements OnInit {
-  @Input()
-  model: Company | null = null;
-  @Output()
-  emitCompany: EventEmitter<Company> = new EventEmitter<Company>();
+  @Input() model: Company | null = null;
+  @Output() emitCompany: EventEmitter<Company> = new EventEmitter<Company>;
 
   companyForm = this.fb.group({
     name: ['', [
@@ -30,10 +30,12 @@ export class CompanyFormComponent implements OnInit {
       Validators.required
     ]]
   }, { updateOn: "submit" });
+  
   submitted = false;
   names = Object.values(names);
   currentRoute: string = '';
   isLoading: boolean = false;
+  companies: Company[] = [];
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private companyService: CompanyService) { }
 
@@ -95,16 +97,25 @@ export class CompanyFormComponent implements OnInit {
     if (this.companyForm.valid) {
       this.model = { ...this.model!, ...this.companyForm.value, status: this.convertToStatusEnum(this.companyForm.value.status || '') };
       this.emitCompany.emit(this.model!);
+      
+      
+      //this.companies.push(this.model!);
+
+      
+      this.resetForm();
     }
   }
 
   resetForm(): void {
-    if (this.model) {
-      this.companyForm.patchValue({
-        name: this.model.name,
-        address: this.model.address,
-        status: this.model.status?.name || '',
-      });
-    }
+    
+    this.model = new Company(-1, '', '', new Status(names.EnAttente));
+    this.companyForm.reset({
+      name: this.model.name,
+      address: this.model.address,
+      status: this.model.status?.name || '',
+    });
+
+    this.submitted = false;
   }
+
 }

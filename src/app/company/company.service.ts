@@ -28,5 +28,7 @@ export class CompanyService {
         } else {
             return of(company).pipe(delay(800));
         }
-    }
+
+
+}
 }
