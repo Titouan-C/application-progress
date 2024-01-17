@@ -24,8 +24,8 @@
     <label for="status">Statut</label>
     <select name="status" id="status" formControlName="status">
         <option value="" selected disabled>Veuillez choisir un statut</option>
-        <option *ngFor="let name of names" value="{{ name }}">
-            {{ name }}
+        <option *ngFor="let status of statusList" value="{{ status.name }}">
+            {{ status.name }}
         </option>
     </select>
     <div *ngIf="companyForm.controls['status'].touched && companyForm.controls['status'].errors" class="error-message">
