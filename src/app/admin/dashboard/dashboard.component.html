@@ -1,1 +1,19 @@
 <h1>Tableau de bord - Administration</h1>
+
+<h2>Liste des statuts</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let status of statusList">
+            <td>{{status}}</td>
+            <td>
+                <span (click)="setCurrentStatus(status)">Éditer</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

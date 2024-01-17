@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Company } from '../company.model';
+import { Company } from '../../shared/models/company.model';
 import { customNameValidator } from './customName.directive';
-import { Status, names } from '../status.model';
+import { Status } from '../../shared/models/status.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CompanyService } from '../company.service';
+import { CompanyService } from '../../shared/services/company.service';
+import { StatusService } from '../../shared/services/status.service';
 
 @Component({
   selector: 'app-company-form',
@@ -31,7 +32,7 @@ export class CompanyFormComponent implements OnInit {
     ]]
   }, { updateOn: "submit" });
   submitted = false;
-  names = Object.values(names);
+  statusList: Array<Status> = [];
   currentRoute: string = '';
   isLoading: boolean = false;
 
@@ -39,15 +40,22 @@ export class CompanyFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private companyService: CompanyService,
+    private statusService: StatusService,
     private router: Router
-  ) { }
+  ) {
+    this.statusService.getAllStatus().subscribe(
+      data => {
+        this.statusList = data;
+      }
+    )
+  }
 
-  convertToStatusEnum(statusName: string): Status | null {
+  convertToStatus(statusName: string): Status | null {
     switch (statusName) {
       case "En Attente":
-        return new Status(names.EnAttente);
+        return new Status(1, "En Attente");
       case "Refus":
-        return new Status(names.Refus);
+        return new Status(2, "Refus");
       default:
         return null;
     }
@@ -67,15 +75,16 @@ export class CompanyFormComponent implements OnInit {
           this.route.params.subscribe(params => {
             const companyId = params['id'];
             if (companyId) {
-              this.companyService.getCompanyById(companyId).subscribe(company => {
-                this.model = company;
-                this.companyForm.patchValue({
-                  name: this.model.name,
-                  address: this.model.address,
-                  status: this.model.status?.name || '',
+              this.companyService.getCompanyById(companyId).then(
+                company => {
+                  this.model = company;
+                  this.companyForm.patchValue({
+                    name: this.model?.name,
+                    address: this.model?.address,
+                    status: this.model?.status?.name || '',
+                  });
                 });
-                this.isLoading = true;
-              });
+              this.isLoading = true;
             }
           });
         }
@@ -83,7 +92,7 @@ export class CompanyFormComponent implements OnInit {
     });
 
     if (!this.model) {
-      this.model = new Company(-1, '', '', new Status(names.EnAttente));
+      this.model = new Company(-1, '', '', new Status(-1, ''));
       this.isLoading = true;
     } else {
       this.companyForm.patchValue({
@@ -98,7 +107,7 @@ export class CompanyFormComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.companyForm.valid) {
-      this.model = { ...this.model!, ...this.companyForm.value, status: this.convertToStatusEnum(this.companyForm.value.status || '') };
+      this.model = { ...this.model!, ...this.companyForm.value, status: this.convertToStatus(this.companyForm.value.status || '') };
       this.emitCompany.emit(this.model!);
       this.companyService.updateCompany(this.model);
       this.router.navigate(['company']);

@@ -1,7 +1,7 @@
 import { Status } from "./status.model";
 
 export class Company {
-    id: number | null;
+    id: number;
     name: string | null;
     address: string | null;
     status: Status | null;

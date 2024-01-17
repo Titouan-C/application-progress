@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Company } from '../company.model';
-import { CompanyService } from '../company.service';
-import { Subscription } from 'rxjs';
+import { Company } from '../../shared/models/company.model';
+import { CompanyService } from '../../shared/services/company.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'dexie';
 
 @Component({
   selector: 'app-company-list',
@@ -18,9 +18,9 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!this.subscription) {
-      this.subscription = this.companyService.getAllCompanies().subscribe(resCompanyList => {
-        this.companyList = resCompanyList;
-      })
+      this.subscription = this.companyService.getAllCompanies().subscribe(companies => {
+        this.companyList = companies;
+      });
     }
   }
 
