@@ -11,7 +11,7 @@ export class StatusDirective implements AfterContentInit {
     if (this.el.nativeElement.innerText == "Refus") {
       this.el.nativeElement.style.backgroundColor = "red";
     } else if (this.el.nativeElement.innerText == "En Attente") {
-      this.el.nativeElement.style.backgroundColor = "orange";
+      this.el.nativeElement.style.backgroundColor = "#5AA9B5";
     }
   }
 
