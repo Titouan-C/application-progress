@@ -21,6 +21,16 @@ export class CompanyService {
         );
     }
 
+    updateCompany(company: Company): Observable<Array<Company>> {
+        const index = this.mockCompanyList.findIndex(c => c.id === company.id);
+        if (index !== -1) {
+            this.mockCompanyList[index] = Object.assign({}, company);
+        } else {
+            throw Error(`La société d'identifiant ${company.id} n'existe pas`);
+        }
+        return this.getAllCompanies();
+    }
+
     getCompanyById(id: number): Observable<Company> {
         const company = this.mockCompanyList.find(c => c.id == id);
         if (!company) {

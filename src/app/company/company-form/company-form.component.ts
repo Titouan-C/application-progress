@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Company } from '../company.model';
 import { customNameValidator } from './customName.directive';
 import { Status, names } from '../status.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from '../company.service';
 
 @Component({
@@ -35,7 +35,12 @@ export class CompanyFormComponent implements OnInit {
   currentRoute: string = '';
   isLoading: boolean = false;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private companyService: CompanyService) { }
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private companyService: CompanyService,
+    private router: Router
+  ) { }
 
   convertToStatusEnum(statusName: string): Status | null {
     switch (statusName) {
@@ -95,6 +100,8 @@ export class CompanyFormComponent implements OnInit {
     if (this.companyForm.valid) {
       this.model = { ...this.model!, ...this.companyForm.value, status: this.convertToStatusEnum(this.companyForm.value.status || '') };
       this.emitCompany.emit(this.model!);
+      this.companyService.updateCompany(this.model);
+      this.router.navigate(['company']);
     }
   }
 
