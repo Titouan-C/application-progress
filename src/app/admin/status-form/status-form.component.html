@@ -1,0 +1,6 @@
+<form [formGroup]="statusForm" (ngSubmit)="onSubmit()">
+    <label for="name">Nom du statut</label>
+    <input type="text" name="name" id="name" formControlName="name"/>
+
+    <button type="submit">Valider</button>
+</form>
