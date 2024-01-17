@@ -8,7 +8,30 @@
 <p appStatusDirective>En Attente</p>
 <p appStatusDirective>Refus</p> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-<h2>Liste des entreprises</h2>
+<h2><u>Liste des entreprises</u></h2>
+<style>
+    h2{
+        border-style:solid;
+        border-radius: 10px;
+        padding: 1%;
+        margin: 5vh 0;
+        text-align: center;
+    }
+    th{
+        margin: 150px;
+        margin-top: 100px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: medium;
+        font-style: oblique;
+
+    }
+
+    #espacement{
+
+    margin: 5vh 0;
+    
+    }
+</style>
 <p *ngIf="companyList.length == 0">Chargement...</p>
 <table *ngIf="companyList.length > 0">
     <thead>
@@ -23,12 +46,22 @@
             <td>{{ company.address }}</td>
             <td appStatusDirective>{{ company.status?.name }}</td>
             <td>
-            <a><span (click)="setCurrentCompany(company)">Éditer</span><br/></a>
-                <a (click)="goToCompany(company)">Voir</a>
+            <a><span (click)="setCurrentCompany(company)" class="StyleA">Éditer</span><br/></a>
+                <a (click)="goToCompany(company)" class="StyleA">Voir</a>
             </td>
         </tr>
     </tbody>
+    <style>
+
+        .StyleA{
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: medium;
+            font-style: oblique;
+        
+        }
+    </style>
 </table>
-<button type="button" (click)="addNewCompany()">Nouvelle Entreprise</button>
+<button type="button" (click)="addNewCompany()" id="espacement">Nouvelle Entreprise</button>
 <app-company-form *ngIf="currentCompany" [model]="currentCompany" (emitCompany)="updateList($event)">
 </app-company-form>
