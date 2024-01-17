@@ -1,4 +1,6 @@
-<ul>
-    <li><a [routerLink]="['/company']">Accueil</a></li>
-    <li><a [routerLink]="['/admin']">Administration</a></li>
-</ul>
+<nav class="navbar bg-body-tertiary">
+    <form class="container-fluid justify-content-start">
+      <button class="btn btn-outline-success me-2" type="button"><a [routerLink]="['/company']">Accueil</a></button>
+      <button class="btn btn-sm btn-outline-secondary" type="button"><a [routerLink]="['/admin']">Administration</a></button>
+    </form>
+  </nav>
