@@ -6,6 +6,10 @@
     && (companyForm.get('name')?.dirty || companyForm.get('name')?.touched)
     ? 'error-red'
     : ''"/>
+    <div *ngIf="companyForm.controls['name'].touched && companyForm.controls['name'].errors" class="error-message">
+        <div *ngIf="companyForm.controls['name'].errors['required']">Le nom est requis.</div>
+        <div *ngIf="companyForm.controls['name'].errors['minlength']">Le nom doit avoir au minimum 2 caractères.</div>
+    </div>
 
     <label for="address">Adresse de l'entreprise</label>
     <input type="text" formControlName="address" id="address"
@@ -13,6 +17,9 @@
     && (companyForm.get('address')?.dirty || companyForm.get('address')?.touched)
     ? 'error-red'
     : ''"/>
+    <div *ngIf="companyForm.controls['address'].touched && companyForm.controls['address'].errors" class="error-message">
+        <div *ngIf="companyForm.controls['address'].errors['required']">L'adresse est requis.</div>
+    </div>
 
     <label for="status">Statut</label>
     <select name="status" id="status" formControlName="status">
@@ -21,6 +28,9 @@
             {{ name }}
         </option>
     </select>
+    <div *ngIf="companyForm.controls['status'].touched && companyForm.controls['status'].errors" class="error-message">
+        <div *ngIf="companyForm.controls['status'].errors['required']">Le status est requis.</div>
+    </div>
     
     <button type="submit">Valider</button>
     <button type="button" (click)="resetForm()">Réinitialiser</button>
