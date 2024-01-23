@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Status } from '../../shared/models/status.model';
@@ -12,6 +12,11 @@ import { StatusService } from '../../shared/services/status.service';
   styleUrl: './status-form.component.css'
 })
 export class StatusFormComponent implements OnInit {
+  @Input()
+  model: Status | null = null;
+  @Output()
+  emitStatus: EventEmitter<Status> = new EventEmitter<Status>();
+
   statusForm: FormGroup = this.fb.group({
     name: ['', [
       Validators.required,
@@ -19,7 +24,6 @@ export class StatusFormComponent implements OnInit {
     ]],
   });
   submitted: boolean = false;
-  model: Status | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -38,7 +42,8 @@ export class StatusFormComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.statusForm.valid) {
-      this.statusService.addStatus(this.statusForm.status);
+      this.model = { ...this.model!, ...this.statusForm.value };
+      this.emitStatus.emit(this.model!);
     }
   }
 }

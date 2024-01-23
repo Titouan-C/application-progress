@@ -10,10 +10,12 @@
     </thead>
     <tbody>
         <tr *ngFor="let status of statusList">
-            <td>{{status}}</td>
+            <td>{{status.name}}</td>
             <td>
                 <span (click)="setCurrentStatus(status)">Éditer</span>
             </td>
         </tr>
     </tbody>
 </table>
+<button type="button" (click)="addNewStatut()" id="espacement">Nouveau statut</button>
+<app-status-form *ngIf="currentStatus" [model]="currentStatus" (emitStatus)="updateList($event)"></app-status-form>

@@ -11,6 +11,9 @@ import { StatusFormComponent } from './status-form/status-form.component';
     AdminRoutingModule,
     DashboardComponent,
     StatusFormComponent
+  ],
+  exports: [
+    StatusFormComponent
   ]
 })
 export class AdminModule { }
