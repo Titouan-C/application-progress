@@ -39,7 +39,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   }
 
   updateList(company: Company): void {
-    let indexItem: number = this.companyList.findIndex(c => c.id === company.id);
+    const indexItem: number = this.companyList.findIndex(c => c.id === company.id);
     if (indexItem >= 0) {
       this.companyService.updateCompany(company);
     } else {

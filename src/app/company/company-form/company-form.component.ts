@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Company } from '../../shared/models/company.model';
 import { customNameValidator } from './customName.directive';
 import { Status } from '../../shared/models/status.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from '../../shared/services/company.service';
 import { StatusService } from '../../shared/services/status.service';
 
@@ -40,8 +40,7 @@ export class CompanyFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private companyService: CompanyService,
-    private statusService: StatusService,
-    private router: Router
+    private statusService: StatusService
   ) {
     this.statusService.getAllStatus().subscribe(
       data => {
@@ -51,14 +50,7 @@ export class CompanyFormComponent implements OnInit {
   }
 
   convertToStatus(statusName: string): Status | null {
-    switch (statusName) {
-      case "En Attente":
-        return new Status(1, "En Attente");
-      case "Refus":
-        return new Status(2, "Refus");
-      default:
-        return null;
-    }
+    return this.statusList.find((value) => value.name === statusName) || null;
   }
 
   isEditRoute(route: string): boolean {

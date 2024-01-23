@@ -20,11 +20,23 @@ export class StatusService {
   }
 
   async addStatus(statusName: string) {
-    const length = this.statusList.getValue?.length || -1;
-    if (length > 0) {
-      await db.status.add(new Status(length + 1, statusName));
+    try {
+      const length = (await this.listAllStatus()).length || -1;
+      if (length > 0) {
+        await db.status.add(new Status(length + 1, statusName));
+      } else {
+        throw Error("Erreur lors de la récupération de la liste des statuts");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async updateStatus(status: Status) {
+    if (status.id) {
+      await db.status.update(status.id, { ...status });
     } else {
-      throw Error("Erreur lors de la récupération de la liste des statuts");
+      throw Error("L'identifiant du statut est inconnue");
     }
   }
 }
