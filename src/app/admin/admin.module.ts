@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { StatusFormComponent } from './status-form/status-form.component';
+import { CompanyService } from '../shared/services/company.service';
 
 @NgModule({
   declarations: [],
@@ -14,6 +15,9 @@ import { StatusFormComponent } from './status-form/status-form.component';
   ],
   exports: [
     StatusFormComponent
+  ],
+  providers: [
+    CompanyService
   ]
 })
 export class AdminModule { }
