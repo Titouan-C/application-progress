@@ -6,7 +6,7 @@ Ce projet est une application web développée en Angular qui permet de suivre l
 
 - **Liste des candidatures** : Les utilisateurs peuvent voir toutes leurs candidatures, ajouter une nouvelle candidature et modifier une candidature existante.
 - **Administration** : Seuls les utilisateurs ayant un token spécifique (une variable "token" égale à "MR742mynp9JXZ8t37wRJP75K") dans leur localStorage peuvent accéder à cette page. Les administrateurs peuvent voir tous les statuts possibles pour les candidatures, ajouter un nouveau statut et modifier un statut existant.
-
+  - Lorsqu'un statut existant est modifié, toutes les entreprises qui ont ce statut sont également mises à jour pour refléter le nouveau statut. Cela garantit que les informations sur les entreprises restent cohérentes et à jour.
 
 ## Technologies utilisées
 
@@ -20,9 +20,10 @@ Ce projet est une application web développée en Angular qui permet de suivre l
 Pour exécuter l'application localement, suivez les étapes ci-dessous :
 
 1. Clonez le [repository](https://github.com/Titouan-C/application-progress).
-2. Installez les dépendances nécessaires avec `npm install`.
-3. Générez le dossier `dist` avec `ng build` (pour rendre l'application web téléchargeable) (*optionnel - voir la partie "Déploiement"*).
-4. Exécutez l'application avec `ng serve`.
+2. Accédez au dossier cloné dans le terminal (`cd application-progress`).
+3. Installez les dépendances nécessaires avec `npm install`.
+4. Générez le dossier `dist` avec `ng build` (pour rendre l'application web téléchargeable) (*optionnel - voir la partie "Déploiement"*).
+5. Exécutez l'application avec `npm install` (ou `ng serve`).
 
 ## Structure du projet
 
