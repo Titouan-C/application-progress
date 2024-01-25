@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Company } from "../models/company.model";
 import { Observable, liveQuery } from "dexie";
 import { db } from "../indexed-db";
+import { Status } from "../models/status.model";
 
 @Injectable()
 export class CompanyService {
@@ -31,5 +32,9 @@ export class CompanyService {
 
     async getCompanyById(id: number): Promise<Company | null> {
         return await db.companies.get(id) || null;
+    }
+
+    async getCompaniesByStatus(status: Status): Promise<Array<Company>> {
+        return await db.companies.where("status.id").equals(status.id).toArray();
     }
 }

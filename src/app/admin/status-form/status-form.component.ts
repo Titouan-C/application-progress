@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Status } from '../../shared/models/status.model';
-import { StatusService } from '../../shared/services/status.service';
+import { CompanyService } from '../../shared/services/company.service';
 
 @Component({
   selector: 'app-status-form',
@@ -27,7 +27,7 @@ export class StatusFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private statusService: StatusService,
+    private companyService: CompanyService,
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +42,15 @@ export class StatusFormComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.statusForm.valid) {
+      const oldStatus = this.model!;
       this.model = { ...this.model!, ...this.statusForm.value };
+      this.companyService.getCompaniesByStatus(oldStatus).then(
+        companies => {
+          for (const c of companies) {
+            this.companyService.updateCompany({ ...c, status: this.model });
+          }
+        }
+      );
       this.emitStatus.emit(this.model!);
     }
   }

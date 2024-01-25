@@ -9,7 +9,7 @@ export class IndexedDb extends Dexie {
     constructor() {
         super('company-db')
         this.version(1).stores({
-            companies: '++id',
+            companies: '++id, status.id',
             status: '++id'
         });
         this.on('populate', () => this.initDb());
