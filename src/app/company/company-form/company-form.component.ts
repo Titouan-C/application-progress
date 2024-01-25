@@ -65,7 +65,7 @@ export class CompanyFormComponent implements OnInit {
         this.currentRoute = segments.map(segment => segment.path).join('/');
         if (this.isEditRoute(this.currentRoute)) {
           this.route.params.subscribe(params => {
-            const companyId = params['id'];
+            const companyId = parseInt(params['id']);
             if (companyId) {
               this.companyService.getCompanyById(companyId).then(
                 company => {
@@ -75,6 +75,7 @@ export class CompanyFormComponent implements OnInit {
                     address: this.model?.address,
                     status: this.model?.status?.name || '',
                   });
+
                 });
               this.isLoading = true;
             }
