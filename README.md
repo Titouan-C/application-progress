@@ -20,9 +20,10 @@ Ce projet est une application web développée en Angular qui permet de suivre l
 Pour exécuter l'application localement, suivez les étapes ci-dessous :
 
 1. Clonez le [repository](https://github.com/Titouan-C/application-progress).
-2. Installez les dépendances nécessaires avec `npm install`.
-3. Générez le dossier `dist` avec `ng build` (pour rendre l'application web téléchargeable) (*optionnel - voir la partie "Déploiement"*).
-4. Exécutez l'application avec `npm install` (ou `ng serve`).
+2. Accédez au dossier cloné dans le terminal (`cd application-progress`).
+3. Installez les dépendances nécessaires avec `npm install`.
+4. Générez le dossier `dist` avec `ng build` (pour rendre l'application web téléchargeable) (*optionnel - voir la partie "Déploiement"*).
+5. Exécutez l'application avec `npm install` (ou `ng serve`).
 
 ## Structure du projet
 
